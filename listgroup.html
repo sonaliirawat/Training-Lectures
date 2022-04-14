@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="bootstrap.css" rel="stylesheet">
+    <style>
+        input{
+           float:right
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-md-6">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        An item 
+                        <input type="button" value="Add Active Class" class="btn btn-sm btn-success">
+                    </li>
+                    <li class="list-group-item">A second item
+                        <input type="button" value="Add Active Class" class="btn btn-sm btn-success">
+                    </li>
+                    <li class="list-group-item">A third item
+                        <input type="button" value="Add Active Class" class="btn btn-sm btn-success">
+                    </li>
+                    <li class="list-group-item">A fourth item
+                        <input type="button" value="Add Active Class" class="btn btn-sm btn-success">
+                    </li>
+                    <li class="list-group-item">And a fifth one
+                        <input type="button" value="Add Active Class" class="btn btn-sm btn-success">
+                    </li>
+                </ul>
+
+            </div>
+            <div class="col-md-6">
+                <ul class="list-group">
+                    <li class="list-group-item">An item
+                        <input type="button" value="Add Active Class" class="btn btn-sm btn-success">
+                    </li>
+                    <li class="list-group-item">A second item
+                        <input type="button" value="Add Active Class" class="btn btn-sm btn-success">
+                    </li>
+                    <li class="list-group-item">A third item
+                        <input type="button" value="Add Active Class" class="btn btn-sm btn-success">
+                    </li>
+                    <li class="list-group-item">A fourth item
+                        <input type="button" value="Add Active Class" class="btn btn-sm btn-success">
+                    </li>
+                    <li class="list-group-item">And a fifth one
+                        <input type="button" value="Add Active Class" class="btn btn-sm btn-success">
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(() => {
+            $('input').click(function () {
+
+                $('li.active').removeClass('active');
+
+                $(this).parent().closest('li').addClass('active');
+            })
+        });
+    </script>
+</body>
+
+</html>

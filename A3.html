@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+    <style>
+        .error {
+            border: red 2px solid;
+        }
+
+        body {
+            font-size: 30px;
+        }
+
+        #txtUsername,
+        #txtPassword {
+            width: 30%;
+            height: 40px;
+            font-size: 20px;
+        }
+
+        #btnLogIn {
+            width: 15%;
+            height: 40px;
+            margin-left: 50px;
+            font-size: 23px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <label> Username </label> <br>
+        <input type="text" isrequired="true" id="txtUsername" placeholder="Username">
+
+    </div> <br> <br>
+    <div>
+        <label> Password </label> <br>
+        <input type="text" isrequired="true" id="txtPassword" placeholder="Password">
+    </div>
+    <br>
+    <br>
+    <div>
+        <label> Email </label> <br>
+        <input type="text" isrequired="true" id="txtEmail" placeholder="Email">
+    </div>
+    <br>
+    <br>
+    <div>
+        <label> Age </label> <br>
+        <input type="text" isrequired="true" id="txtAge" placeholder="Age">
+    </div>
+
+    <input type="button" value="Log In" id="btnLogIn" class="btn">
+
+    <script src="jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(() => {
+            $('#btnLogIn').click(() => {
+                $("input[isrequired='true']").removeClass('error');
+                var isValid = true;
+
+                var Username = $('#txtUsername').val();
+                var Password = $('#txtPassword').val();
+                var Email = $('#txtEmail').val();
+                var Age = $('#txtAge').val();
+
+
+                //Validation for input
+
+                $("input[isrequired='true']").each(function (i, v) {
+                    if ($(v).val() == "") {
+                        $(v).addClass('error');
+                    }
+                })
+                if ($("input[isrequired='true'].error").length > 0) {
+                    return false;
+                }
+
+                if (Username == "test" && Password == "test123") {
+                    alert('Login Successful');
+                }
+                else {
+                    alert('Incorrect input');
+                }
+            })
+
+        })
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <link href="bootstrap.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Form</h1>
+        <div class="row mb-2">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        Add Student
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="email">Student Name:</label>
+                            <input type="text" class="form-control" id="txtStudentName">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Student Age:</label>
+                            <input type="number" min="0" max="110" class="form-control" id="txtStudentAge">
+                        </div>
+
+                        <input type="button" value="Add Student to List" class="btn btn-primary mt-1"
+                            id="btnAddStudent">
+                        <input type="button" value="Clear Students" class="btn btn-danger mt-1" id="btnClearStudents">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12" id="dvStudentList">
+                <table class="table table-bordered" id="tblStudentList">
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Age</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(() => {
+            //var students = ["Stu 1", "Stu 2", "Stu 3", "Stu 4", "Stu 5", "Stu 6", "Stu 7", "Stu 8", "Stu 9", "Stu 10", "Stu 11", "Stu 12"];
+            var students = [
+                {
+                    name: "Stu 1",
+                    age: 18
+                },
+                {
+                    name: "Stu 2",
+                    age: 19
+                },
+                {
+                    name: "Stu 3",
+                    age: 20
+                }
+            ];
+            students.forEach(element => {
+                $("#tblStudentList").find('tbody').append("<tr><td>" + element.name + "</td><td>" + element.age + "</td></tr>");
+            });
+
+            $("#btnAddStudent").click(function () {
+                var studentName = $("#txtStudentName").val();
+                var studentAge = $("#txtStudentAge").val();
+                $("#tblStudentList").find('tbody').append("<tr><td>" + studentName + "</td><td>" + studentAge + "</td></tr>");
+                $('#txtStudentName').val('').focus();
+                $('#txtStudentAge').val('');
+            })
+            $("#btnClearStudents").click(function () {
+                $('#tblStudentList').find('tbody').html('');
+            });
+        })
+
+    </script>
+
+</body>
+
+</html>
