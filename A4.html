@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="bootstrap.css" rel="stylesheet">
+    <style>
+        .error{
+            border: red 2px solid;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <h1>Accounts</h1>
+            <div class="col-4">
+                <div class="form-group">
+                    <label>Amount</label>
+                    <input type="number" class="form-control" id="txtAmount">
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <label>Type</label>
+                
+                    <select id="slType" class="form-control">
+                        <option>Credit</option>
+                        <option>Debit</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-4 mt-4">
+                <input type="button" value="Save" class="btn btn-success" id="btnSave">
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-bordered" id="tblTransactionList">
+                    <thead>
+                        <tr>
+                            <th>Amount</th>
+                            <th>Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(() => {
+
+            $('#btnSave').click(() => {
+                var amount = $('#txtAmount').val();
+                var type = $('#slType option:selected').val();
+if(amount != ''){
+                var html = `<tr>
+                    <td>${amount}</td>
+                    <td>${type}</td>
+                    <td><input type="button" id="btnRemove" value="Remove" class="btn btn-danger btn-sm"></td>
+<tr>`;
+    
+
+
+                $('#tblTransactionList').find("tbody").append(html);
+            
+
+                $('#txtAmount').val('0').focus();
+                $('#slType').val($("#slType option:contains('Credit')").val());
+                
+}
+if (amount == '') {
+    alert('Please enter amount');
+    // $('#txtAmount').addclass('error');
+}
+
+}); 
+
+        });
+
+
+
+    </script>
+
+
+</body>
+
+</html>
