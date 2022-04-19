@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="bootstrap.css">
+    <style>
+        .error {
+            border: solid red;
+        }
+
+        .rowcolor {
+            background: blue;
+            ;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <h1>Hisab Kitab</h1>
+            <div class="col-4">
+                <div class="form-group">
+                    <label>Amount</label>
+                    <input class="form-control" type="number" id="numAmount">
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <label>Type</label>
+                    <select id="slType" class="form-control">
+                        <option>Credit</option>
+                        <option>Debit</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-4 mt-4">
+                <input type="button" value="Save" class="btn btn-success" id="btnSaveTransaction">
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-bordered" id="tblTransactionList">
+                    <thead>
+                        <tr>
+                            <th>Amount</th>
+                            <th>Type</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+                <input type="button" value="Calculate Total" class="btn btn-success" id="btnCalculateTotal">
+                <h1>Total</h1>
+                <h1 id="numamount"></h1>
+            </div>
+        </div>
+    </div>
+    <script src="jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $("#btnSaveTransaction").click(function () {
+                $('#numAmount').removeClass('error');
+                var amount = $('#numAmount').val();
+                if (amount == "" || amount == "0") {
+                    $('#numAmount').addClass('error');
+                    return false;
+                }
+                var type = $('#slType option:selected').val();
+
+                var totalAmount = calculateTotal();
+
+                if (totalAmount < parseInt(amount) && type == "Debit") {
+                    alert("Gareeb");
+                    return false;
+                }
+                var html = `<tr>
+                    <td>${amount}</td> 
+                    <td>${type}</td>
+                    <td><input type="button" value="Remove" class="btn btn-danger btn-sm btnRemove"></td>
+                    </tr>`;
+
+                $('#tblTransactionList').find("tbody").append(html);
+                $('#numAmount').val('10').focus();
+                $('#slType').val("Credit");
+            });
+            $("#btnCalculateTotal").click(function () {
+                var totalAmount = calculateTotal();
+                $("#numamount").text(totalAmount)
+            });
+
+
+            $('#tblTransactionList').on("click", ".btnRemove", function () {
+                $(this).parent().closest('tr').remove();
+            })
+            $('#tblTransactionList').on("click", "tr", function () {
+                $('#tblTransactionList').find('tr').removeClass('rowcolor');
+                $(this).addClass("rowcolor");
+            })
+        })
+        function calculateTotal() {
+            var totalAmount = 0;
+            $('#tblTransactionList').find('tbody tr').each(function () {
+                var amount = $(this).find('td:eq(0)').html();
+                var type = $(this).find('td:eq(1)').html();
+                if (type == "Credit") {
+                    totalAmount += parseInt(amount); //11
+                } else {
+                    totalAmount -= parseInt(amount); //11
+                }
+            })
+            return totalAmount;
+        }
+    </script>
+
+</body>
+
+</html>
