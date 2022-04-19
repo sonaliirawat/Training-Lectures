@@ -57,8 +57,9 @@
 
                     </tbody>
                 </table>
+                <input type="button" value="Calculate Total" class="btn btn-success" id="btnCalculateTotal">
                 <h1>Total</h1>
-                <h1></h1>
+                <h1 id="numamount"></h1>
             </div>
         </div>
     </div>
@@ -75,6 +76,12 @@
                 }
                 var type = $('#slType option:selected').val();
 
+                var totalAmount = calculateTotal();
+
+                if (totalAmount < parseInt(amount) && type == "Debit") {
+                    alert("Gareeb");
+                    return false;
+                }
                 var html = `<tr>
                     <td>${amount}</td> 
                     <td>${type}</td>
@@ -84,14 +91,13 @@
                 $('#tblTransactionList').find("tbody").append(html);
                 $('#numAmount').val('10').focus();
                 $('#slType').val("Credit");
-
-
-                $('#tblTransactionList').find('tbody tr').each(function () {
-                    var amount = $(this).find('td:eq(0)').html();
-                })
+            });
+            $("#btnCalculateTotal").click(function () {
+                var totalAmount = calculateTotal();
+                $("#numamount").text(totalAmount)
             });
 
-            
+
             $('#tblTransactionList').on("click", ".btnRemove", function () {
                 $(this).parent().closest('tr').remove();
             })
@@ -99,9 +105,20 @@
                 $('#tblTransactionList').find('tr').removeClass('rowcolor');
                 $(this).addClass("rowcolor");
             })
-
-
         })
+        function calculateTotal() {
+            var totalAmount = 0;
+            $('#tblTransactionList').find('tbody tr').each(function () {
+                var amount = $(this).find('td:eq(0)').html();
+                var type = $(this).find('td:eq(1)').html();
+                if (type == "Credit") {
+                    totalAmount += parseInt(amount); //11
+                } else {
+                    totalAmount -= parseInt(amount); //11
+                }
+            })
+            return totalAmount;
+        }
     </script>
 
 </body>
