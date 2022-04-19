@@ -11,6 +11,10 @@
         .error {
             border: solid red;
         }
+
+        .rowclass {
+            background-color: blue;
+        }
     </style>
 </head>
 
@@ -54,37 +58,63 @@
                 </table>
             </div>
         </div>
+        <div class="col-4 mt-4">
+            <input type="button" value="Total" class="btn btn-primary" id="btnTotal">
+        </div>
+        <span id="numTotalAmount"> TotalAmount</span>
     </div>
+
     <script src="jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
 
             $("#btnSaveTransaction").click(function () {
-                
+
 
                 $('#numAmount').removeClass('error');
 
                 var amount = $('#numAmount').val();
-                if (amount == "" || "0") {
+                if (amount == "" || amount == "0") {
                     $('#numAmount').addClass('error');
-                   
-                    }
+                    return false;
+                }
                 var type = $('#slType option:selected').val();
-               
+
                 var html = `<tr>
                     <td>${amount}</td> 
                     <td>${type}</td>
-                    <td><input type="button" value="Remove" class="btn btn-danger btn-sm"></td>
+                    <td><input type="button" value="Remove" class="btn btn-danger btn-sm btnRemove"></td>
                     </tr>`;
-           
+
                 $('#tblTransactionList').find("tbody").append(html);
-                
+
 
                 $('#numAmount').val('').focus();
                 $('#slType').val("Credit");
-                
 
-            });
+                $('#tblTransactionList').find('tbody tr').each(function () {
+                    var amount = $(this).find('td:eq(0)').html();
+                    $("#btnTotal").click(function calc_total() {
+                        var TotalAmount = 0;
+                        TotalAmount =+ parseInt($(this).text());
+                    });
+                    $('#numTotalAmount').text(TotalAmount);
+                    
+                })
+
+            
+
+
+        });
+
+        $('#tblTransactionList').on("click", ".btnRemove", function () {
+            $(this).parent().closest('tr').remove();
+        })
+
+        $('#tblTransactionList').on("click", "tr", function () {
+            $('#tblTransactionList').find('tr').removeClass('rowclass');
+            $(this).addClass('rowclass');
+        })
 
         })
     </script>
