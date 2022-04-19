@@ -70,7 +70,11 @@ if(amount != ''){
                     <td>${type}</td>
                     <td><input type="button" id="btnRemove" value="Remove" class="btn btn-danger btn-sm"></td>
 <tr>`;
-    
+    if (amount == '' || amount == '0') {
+    alert('Please enter amount');
+    proceed = true;
+}
+
 
 
                 $('#tblTransactionList').find("tbody").append(html);
@@ -78,14 +82,11 @@ if(amount != ''){
 
                 $('#txtAmount').val('0').focus();
                 $('#slType').val($("#slType option:contains('Credit')").val());
+}
+});
                 
-}
-if (amount == '') {
-    alert('Please enter amount');
-    // $('#txtAmount').addclass('error');
-}
 
-}); 
+
 
         });
 
