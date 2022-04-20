@@ -80,6 +80,22 @@
                 }
                 var type = $('#slType option:selected').val();
 
+                var TotalAmount = 0;
+                $('#tblTransactionList').find('tbody tr').each(function () {
+
+                    var amount = $(this).find('td:eq(0)').html();
+                    var type = $(this).find('td:eq(1)').html();
+                    if (type == 'Credit') {
+                        TotalAmount += parseInt(amount);
+                    } else {
+                        TotalAmount -= parseInt(amount);
+                    }
+                })
+                if (TotalAmount < parseInt(amount) && type == 'Debit') {
+                    alert("Gareeb");
+                    return false;
+                }
+
                 var html = `<tr>
                     <td>${amount}</td> 
                     <td>${type}</td>
@@ -92,29 +108,33 @@
                 $('#numAmount').val('').focus();
                 $('#slType').val("Credit");
 
-                $('#tblTransactionList').find('tbody tr').each(function () {
-                    var amount = $(this).find('td:eq(0)').html();
+            })
+            
+                
                     $("#btnTotal").click(function calc_total() {
                         var TotalAmount = 0;
-                        TotalAmount =+ parseInt($(this).text());
-                    });
-                    $('#numTotalAmount').text(TotalAmount);
-                    
+                        var TotalAmount = 0;
+                $('#tblTransactionList').find('tbody tr').each(function (){
+                    var amount = $(this).find('td:eq(0)').html();
+                    var type = $(this).find('td:eq(1)').html();
+                    if (type == 'Credit') {
+                        TotalAmount += parseInt(amount);
+                    } else {
+                        TotalAmount -= parseInt(amount);
+                    }
                 })
+                $('#numTotalAmount').text(TotalAmount)
+                    });
+                    
 
-            
+            $('#tblTransactionList').on("click", ".btnRemove", function () {
+                $(this).parent().closest('tr').remove();
+            })
 
-
-        });
-
-        $('#tblTransactionList').on("click", ".btnRemove", function () {
-            $(this).parent().closest('tr').remove();
-        })
-
-        $('#tblTransactionList').on("click", "tr", function () {
-            $('#tblTransactionList').find('tr').removeClass('rowclass');
-            $(this).addClass('rowclass');
-        })
+            $('#tblTransactionList').on("click", "tr", function () {
+                $('#tblTransactionList').find('tr').removeClass('rowclass');
+                $(this).addClass('rowclass');
+            })
 
         })
     </script>
