@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
 </head>
+
 <body>
   <caption>Tally Ledgers</caption>
   <tr>
@@ -40,51 +42,51 @@
     <td align="right">Total :</td>
     <td align="center"><output type="text" id="sum" name="sum" value="sum">0</output></td>
   </tr>
-</table>
-<script src="jquery-3.6.0.min.js"></script>
-<script>
-$(document).ready(function() {
-    //iterate through each textboxes and add keyup
-    //handler to trigger sum event
-    $(".txt").each(function() {
-      $(this).keyup(function() {
-        calculateSum();
+  </table>
+  <script src="jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      //iterate through each textboxes and add keyup
+      //handler to trigger sum event
+      $(".txt").each(function () {
+        $(this).keyup(function () {
+          calculateSum();
+        });
       });
     });
-  });
-  
-  function calculateSum() {
-    var sum = 0;
-    //iterate through each textboxes and add the values
-    $(".txt").each(function() {
-      //add only if the value is number
-      if (!isNaN(this.value) && this.value.length != 0) {
-        sum += parseFloat(this.value);
-      }
+
+    function calculateSum() {
+      var sum = 0;
+      //iterate through each textboxes and add the values
+      $(".txt").each(function () {
+        //add only if the value is number
+        if ($(this).val() != "") {
+          sum += parseFloat(this.value);
+        }
+      });
+      //.toFixed() method will roundoff the final sum to 2 decimal places
+      $("#sum").html(sum.toFixed(2));
+    }
+    const calculateSum = function () {
+      var sum = 0;
+      //iterate through each textboxes and add the values
+      $(".txt").each(function () {
+        let val = isNaN(this.value) || this.value.trim().length === 0 ? 0 : +this.value; // cast to number
+        const drcr = $(this).closest("tr").find("[name^=cr_dr]").val(); // name begins with cr_dr
+        sum += val * (drcr === "-" ? -1 : 1); // ternary based on the value
+        $(this).toggleClass("neg", drcr === "-"); // remove if you do not want this
+      });
+      //.toFixed() method will roundoff the final sum to 2 decimal places
+      $("#sum")
+        .val(sum.toFixed(2))
+        .toggleClass("neg", sum < 0); // remove if you do not want this
+
+    }
+
+    $(function () {
+      $(".txt").on("input", calculateSum);
+      $("select").on("change", calculateSum);
     });
-    //.toFixed() method will roundoff the final sum to 2 decimal places
-    $("#sum").html(sum.toFixed(2));
-  }
-  const calculateSum = function() {
-  var sum = 0;
-  //iterate through each textboxes and add the values
-  $(".txt").each(function() {
-    let val = isNaN(this.value) || this.value.trim().length === 0 ? 0 : +this.value; // cast to number
-    const drcr = $(this).closest("tr").find("[name^=cr_dr]").val(); // name begins with cr_dr
-    sum += val * (drcr === "-" ? -1 : 1); // ternary based on the value
-    $(this).toggleClass("neg",drcr === "-"); // remove if you do not want this
-  });
-  //.toFixed() method will roundoff the final sum to 2 decimal places
-  $("#sum")
-  .val(sum.toFixed(2))
-  .toggleClass("neg",sum<0); // remove if you do not want this
-  
-}
-
-$(function() {
-  $(".txt").on("input", calculateSum);
-  $("select").on("change", calculateSum);
-});
 
 
 
@@ -106,7 +108,7 @@ $(function() {
 
 
 
-</script>
+  </script>
 
 
 
@@ -120,19 +122,5 @@ $(function() {
 
 
 </body>
+
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
