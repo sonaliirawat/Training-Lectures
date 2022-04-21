@@ -57,11 +57,14 @@
 
                     </tbody>
                 </table>
+                <input type="button" value="Calculate Total" class="btn btn-success" id="btnCalculateTotal">
                 <h1>Total</h1>
-                <h1></h1>
+            <!-- <input type="number" id="numamount">
+             -->
+             <h1 id="numamount"></h1>
             </div>
         </div>
-        <input type="text" id="sum" name="sum" value="0" />
+
     </div>
     <script src="jquery-3.6.0.min.js"></script>
     <script>
@@ -75,6 +78,13 @@
                     return false;
                 }
                 var type = $('#slType option:selected').val();
+
+                var totalAmount = calculateTotal();
+
+                if(totalAmount < parseInt(amount) && type == "Debit"){
+                    alert("Gareeb");
+                    return false;
+}
 
                 var html = `<tr>
                     <td>${amount}</td> 
@@ -91,7 +101,10 @@
                     var amount = $(this).find('td:eq(0)').html();
                 })
             });
-
+$("#btnCalculateTotal").click(function() {
+    var totalAmount = calculateTotal();
+    $("#numamount").text(totalAmount);
+});
 
             $('#tblTransactionList').on("click", ".btnRemove", function () {
                 $(this).parent().closest('tr').remove();
@@ -103,7 +116,21 @@
 
 
         })
+function calculateTotal() {
+var totalAmount = 0;
+$('#tblTransactionList').find('tbody tr').each(function () {
+    var amount = $(this).find('td:eq(0)').html();
+    var type = $(this).find('td:eq(1)').html();
+    if (type == "Credit"){
+        totalAmount += parseInt(amount);
 
+    }
+    else {
+        totalAmount -= parseInt(amount);
+    }
+})
+return totalAmount;
+}
        
 
 

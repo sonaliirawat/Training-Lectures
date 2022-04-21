@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="bootstrap.css">
+
+</head>
+
+<body>
+    <div class="container">
+        <h1>Status Check</h1>
+        <label class="mt-4">Enter Age</label>
+        <input type="number" class="form-group mt-3" id="txtAge">
+        <input type="button" value="Check Status" class="btn btn-success m-lg-3" id="btnCheckStatus">
+        <div class="form-group">
+            <label>Gender</label>
+            <select id="slType" class="form-group">
+                <option>Female</option>
+                <option>Male</option>
+            </select>
+        </div><hr>
+        <div id="divResult">Show Result</div>
+</div>
+    
+            <script src="jquery-3.6.0.min.js"></script>
+            <script>
+                $(document).ready(() => {
+                    
+                    
+                        
+                    $('#btnCheckStatus').click(() => {
+                        var age = $('#txtAge').val();
+                        var gender = $('#slType option:selected').val();
+                        if (gender == 'Female') {
+                            var type = 'She';
+                        }
+                        else {
+                            var type = 'He';
+                        }
+                        
+                    if (age >= 0 && age < 19) {
+                    $('#divResult').html(type + " is minor ")                    }
+                    else if (age >= 19 && age <= 30) {
+                        $('#divResult').html(type + " is an adult ")                    
+
+
+
+
+                    }
+                    else if (age > 30 && age <= 60) {
+                        $('#divResult').html(type + " is in middle adulthood ")                    
+
+                    }
+                    else 
+                    {
+                        $('#divResult').html(type + " is a senior citizen ")                    
+                    return false;
+                    }
+
+
+
+
+                });
+
+
+
+                
+
+
+                
+
+            });
+
+
+
+
+            </script>
+</body>
+
+</html>
