@@ -22,63 +22,62 @@
                 <option>Female</option>
                 <option>Male</option>
             </select>
-        </div><hr>
+        </div>
+        <hr>
         <div id="divResult">Show Result</div>
-</div>
-    
-            <script src="jquery-3.6.0.min.js"></script>
-            <script>
-                $(document).ready(() => {
-                    
-                    
-                        
-                    $('#btnCheckStatus').click(() => {
-                        var age = $('#txtAge').val();
-                        var gender = $('#slType option:selected').val();
-                        if (gender == 'Female') {
-                            var type = 'She';
-                        }
-                        else {
-                            var type = 'He';
-                        }
-                        
-                    if (age >= 0 && age < 19) {
-                    $('#divResult').html(type + " is minor ")                    }
-                    else if (age >= 19 && age <= 30) {
-                        $('#divResult').html(type + " is an adult ")                    
+    </div>
+
+    <script src="jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(() => {
+
+
+
+            $('#btnCheckStatus').click(() => {
+                var age = $('#txtAge').val();
+                var gender = $('#slType option:selected').val();
+                if (gender == 'Female') {
+                    var type = 'She';
+                }
+                else {
+                    var type = 'He';
+                }
+
+                if (age >= 0 && age < 19) {
+                    $('#divResult').html(type + " is minor ")
+                }
+                else if (age >= 19 && age <= 30) {
+                    $('#divResult').html(type + " is an adult ")
 
 
 
 
-                    }
-                    else if (age > 30 && age <= 60) {
-                        $('#divResult').html(type + " is in middle adulthood ")                    
+                }
+                else if (age > 30 && age <= 60) {
+                    $('#divResult').html(type + " is in middle adulthood ")
 
-                    }
-                    else 
-                    {
-                        $('#divResult').html(type + " is a senior citizen ")                    
+                }
+                else {
+                    $('#divResult').html(type + " is a senior citizen ")
                     return false;
-                    }
+                }
 
-
-
-
-                });
-
-
-
-                
-
-
-                
-
+                $('#txtAge').val('').focus();
             });
 
 
 
 
-            </script>
+
+
+
+
+        });
+
+
+
+
+    </script>
 </body>
 
 </html>
