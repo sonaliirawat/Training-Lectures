@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Category</title>
+    <link rel="stylesheet" href="bootstrap.css">
+    <style>
+        .ftstyle{
+            font-size: 160%;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Differentiating Person's Category on the basis of his/her age</h1>
+    <hr>
+    <div class="container">
+        <div class="row">
+            <div class="col-5" >
+                <div class="form-group">
+                    <label>Age</label>
+                    <input class="form-control" type="number" id="numAge">
+                </div>
+            </div>
+            <div class="col-4 mt-4">
+                <input type="button" value="Check Status" class="btn btn-primary" id="btnCheckStatus">
+            </div>
+
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-1 mt-4" >
+                <div class="form-group">
+                    <div class="ftstyle">Gender:</div>
+                    
+                </div>
+            </div>
+            <div class="col-4 mt-1">
+                <div class="form-group">
+                    <label>Gen</label>
+                    <select id="slGen" class="form-control">
+                        <option>Male</option>
+                        <option>Female</option>
+                    </select>
+                </div>
+            </div>
+        </div><hr>
+        <div class="form-group">
+           <div id="printResult"></div>
+        </div>
+    </div>
+
+    <script src="jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(()=>{
+            $('#btnCheckStatus').click(() => {
+                        var age = $('#numAge').val();
+                        var Gen = $('#slGen option:selected').val();
+                        if (Gen == 'Male') {
+                            var type = 'He';
+                        }
+                        else {
+                            var type = 'She';
+                        }
+                        
+                    if (age >= 0 && age < 19) {
+                        $('#printResult').append(type + " is minor. <br>");
+                    }
+                    else if (age >= 19 && age <= 30) {
+                        $('#printResult').append(type + " is an adult. <br>");
+
+                    }
+                    else if (age > 30 && age <= 60) {
+                        $('#printResult').append(type + " is in middle age.<br>");
+
+                    }
+                    else 
+                    {
+                        $('#printResult').append(type + " is a senior citizen. <br>");
+                   
+                    }
+                    $('#numAge').val('').focus();
+                    $('#slType').val("Male");
+                    
+
+
+
+
+                });
+               
+        })
+    </script> 
+    
+
+
+</body>
+
+</html>
