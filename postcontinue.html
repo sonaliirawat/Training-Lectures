@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="bootstrap.css">
+</head>
+
+<body>
+    <!-- you will create  a table with -->
+    <table class="table table-bordered" id="tblPostList">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>userID</th>
+                <th>Title</th>
+                <th>Body</th>
+            </tr>
+        </thead>
+        <tbody>
+        
+        </tbody>
+    </table>
+
+
+    <script src="jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $.get("https://jsonplaceholder.typicode.com/posts", function (data) {
+                
+                $.each(data, function (i, v) {
+                    var html =  `<tr>
+                    <td>${ID}</td> 
+                    <td>${userID}</td>
+                    <td>${Title}</td>
+                    <td>${Body}</td>
+                    </tr>`;
+
+                    
+                })
+            })
+
+
+        })
+    </script>
+</body>
+
+</html>

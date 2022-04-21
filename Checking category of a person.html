@@ -27,7 +27,7 @@
                 </div>
             </div>
             <div class="col-4 mt-4">
-                <input type="button" value="Check Status" class="btn btn-success" id="btnCheckStatus">
+                <input type="button" value="Check Status" class="btn btn-primary" id="btnCheckStatus">
             </div>
 
         </div>
@@ -58,7 +58,7 @@
     <script src="jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(()=>{
-            $('#btnCheckStatus').click(function(){
+            $('#btnCheckStatus').click(()=>{
                 var Age = $("#numAge").val();
                 var Gen = $("#slGen option:selected").val();
                 
