@@ -87,7 +87,7 @@
             })
             $('#btnMoveRight').click(() => {
                 $('#slOption1').removeClass('error');
-                    Text1 = $('#slOption1 option:selected').remove().val();
+                    var Text1 = $('#slOption1 option:selected').val().remove();
                     if (Text1 == "-Select Option-" ) {
                         $('#slOption1').addClass('error');
                         return false;
@@ -97,7 +97,7 @@
             })
             $('#btnMoveLeft').click(() => {
                 $('#slOption1').removeClass('error');
-                    Text2 = $('#slOption2 option:selected').remove().val();
+                   var Text2 = $('#slOption2 option:selected').val().remove();
                     if (Text2== "-Select Option-") {
 
                         $('#slOption2').addClass('error');
