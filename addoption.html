@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Option</title>
+    <link rel="stylesheet" href="bootstrap.css">
+</head>
+<body>
+    <div class="container p-3 mb-2 bg-white text-dark">
+        <div class="row">
+            <div class="col-12 mt-3">
+                <div class="form-group">
+                  <label>Add Option</label>
+                  <input class="form-control" type="text" id="txtAddOption" placeholder="Enter Anything">
+                </div>
+              </div>
+
+              <div class="col-12 mt-3">
+            
+                <button type="button" class="btn btn-warning btn-lg btn-block" id="btnAddOption">Add Option</button>
+              
+                </div>
+                <div class="col-12 mt-3">
+                    <div class="form-group">
+                        <label>Options</label>
+                        <select id="slOption" class="form-control">
+                            <option>-Select Option-</option>
+                            
+                        </select>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+
+    <script src="jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(()=>{
+            $('#btnAddOption').click(()=>{
+              
+            Text = $('#txtAddOption').val();
+           
+  
+            $('#slOption').append(new Option(Text));
+
+            $('#txtAddOption').val('').focus();
+        
+               
+        })
+        
+    })
+    </script> 
+    
+</body>
+</html>
