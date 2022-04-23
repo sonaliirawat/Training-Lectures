@@ -87,9 +87,10 @@
             })
             $('#btnMoveRight').click(() => {
                 $('#slOption1').removeClass('error');
-                    var Text1 = $('#slOption1 option:selected').val().remove();
+                    var Text1 = $('#slOption1 option:selected').remove().val();
                     if (Text1 == "-Select Option-" ) {
                         $('#slOption1').addClass('error');
+                         alert('please select valid option');
                         return false;
                     }
                     $('#slOption2').append(new Option(Text1));
@@ -97,10 +98,11 @@
             })
             $('#btnMoveLeft').click(() => {
                 $('#slOption2').removeClass('error');
-                   var Text2 = $('#slOption2 option:selected').val().remove();
-                    if (Text2== "-Select Option-") {
+                   var Text2 = $('#slOption2 option:selected').remove().val();
+                    if (Text2 == "-Select Option-") {
 
                         $('#slOption2').addClass('error');
+                        alert('please select valid option');
                         return false;
                     
                     }
