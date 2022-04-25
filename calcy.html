@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="bootstrap.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-6 mt-3">
+                <div class="form-group">
+                    <label>Number1</label>
+                    <input class="form-control" type="number" id="numNumber1" placeholder="Enter Number1">
+                </div>
+            </div>
+            <div class="col-6 mt-3">
+                <div class="form-group">
+                    <label>Number2</label>
+                    <input class="form-control" type="number" id="numNumber2" placeholder="Enter Number2">
+                </div>
+            </div>
+            <div class="col-3 mt-3">
+                <input type="button" class="btn btn-primary" id="btnAdd" value="add">
+            </div>
+            <div class="col-3 mt-3">
+                <input type="button" class="btn btn-primary btnSub" value="sub">
+            </div>
+            <div class="col-3 mt-3">
+                <input type="button" class="btn btn-primary btnMul" value="mul">
+            </div>
+            <div class="col-3 mt-3">
+                <input type="button" class="btn btn-primary btnDiv" value="divide">
+            </div>
+            <div class="col-6 mt-3" id="headResult">RESULT...</div>
+
+        </div>
+    </div>
+    <script src="jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(()=>{
+            $('#btnAdd').click(()=>{
+            var number1= $('#numNumber1').val();
+            var number2= $('#numNumber2').val();
+            var result= mul(number1,number2);
+            $('#headResult').html(result);
+
+        })
+    })
+    function mul(number1, number2){
+                return parseInt(number1) * parseInt(number2);
+            }
+    </script>
+
+</body>
+
+</html>

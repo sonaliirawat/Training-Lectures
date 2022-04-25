@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Table Data</title>
+    <title>Document</title>
     <link rel="stylesheet" href="bootstrap.css">
 </head>
 
@@ -18,8 +18,6 @@
                 <th>id</th>
                 <th>title</th>
                 <th>body</th>
-                
-
             </tr>
         </thead>
         <tbody id="tblData">
@@ -31,28 +29,30 @@
 
     <script src="jquery-3.6.0.min.js"></script>
     <script>
-        $(document).ready(function () {
-            //wrong concept::::: userId will load API after reaching to the post continue page. so you cannot implement the click event on it.
-            var userId =  $('#tblPostList').on("click", ".btnViewPosts", function () {
-                $(this).parent().closest('tr').val('userId');
-            })
-            $.get("https://jsonplaceholder.typicode.com/posts", function (listdata) {
+       $(document).ready(function () {
+        var userid = querystring("userId");
+            $.get("https://jsonplaceholder.typicode.com/posts?userId="+userid+"", function (listdata) {
+                
                 $.each(listdata, function (i, v) {
                     var html = `<tr>
-                    <td>${v.userId}</td>
+                    <td>${v.userId}</td> 
                     <td>${v.id}</td>
                     <td>${v.title}</td>
                     <td>${v.body}</td>
-                    <td><input type="button" value="View Posts" class="btn btn-primary btn-sm btnViewPosts" userId="${v.userId}"></td>
+                    <td><input type="button" value="View Comments" class="btn btn-primary btn-sm btnViewComments" postid="${v.id}"></td>
                     </tr>`;
                     $("#tblPostList").find("tbody").append(html);
                 })
-                $('.btnViewPosts').click(function () {
-                    var userId = $(this).attr("userId");
-                    
-                    window.location.href = 'postcontinue.html?userId=  '+ userId +'';
+                $('.btnViewComments').click(function () {
+                    var postid = $(this).attr("postid");
+                    window.location.href = 'commentdata.html?postId=' +postid;
                 })
             })
+            function querystring(key) {
+            key = key.replace(/[*+?^$.\[\]{}()|\\\/]/g, "\\$&"); // escape RegEx meta chars
+            var match = location.search.match(new RegExp("[?&]" + key + "=([^&]+)(&|$)"));
+            return match && decodeURIComponent(match[1].replace(/\+/g, " "));
+        }
         })
 
     </script>

@@ -14,11 +14,12 @@
     <table class="table table-bordered" id="tblPostList">
         <thead>
             <tr>
-                <th>userId</th>
+                <th>postId</th>
                 <th>id</th>
-                <th>title</th>
+                <th>name</th>
+                <th>email</th>
                 <th>body</th>
-                
+
 
             </tr>
         </thead>
@@ -32,28 +33,30 @@
     <script src="jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
-            //wrong concept::::: userId will load API after reaching to the post continue page. so you cannot implement the click event on it.
-            var userId =  $('#tblPostList').on("click", ".btnViewPosts", function () {
-                $(this).parent().closest('tr').val('userId');
-            })
-            $.get("https://jsonplaceholder.typicode.com/posts", function (listdata) {
+            var postid = querystring("postId");
+            
+            $.get("https://jsonplaceholder.typicode.com/comments?postId="+postid+"", function (listdata) {
                 $.each(listdata, function (i, v) {
                     var html = `<tr>
-                    <td>${v.userId}</td>
+                    <td>${v.postId}</td>
                     <td>${v.id}</td>
-                    <td>${v.title}</td>
+                    <td>${v.name}</td>
+                    <td>${v.email}</td>
                     <td>${v.body}</td>
-                    <td><input type="button" value="View Posts" class="btn btn-primary btn-sm btnViewPosts" userId="${v.userId}"></td>
+                    
                     </tr>`;
                     $("#tblPostList").find("tbody").append(html);
                 })
-                $('.btnViewPosts').click(function () {
-                    var userId = $(this).attr("userId");
-                    
-                    window.location.href = 'postcontinue.html?userId=  '+ userId +'';
-                })
+
             })
+            function querystring(key) {
+            key = key.replace(/[*+?^$.\[\]{}()|\\\/]/g, "\\$&"); // escape RegEx meta chars
+            var match = location.search.match(new RegExp("[?&]" + key + "=([^&]+)(&|$)"));
+            return match && decodeURIComponent(match[1].replace(/\+/g, " "));
+            }
+            
         })
+      
 
     </script>
 </body>
