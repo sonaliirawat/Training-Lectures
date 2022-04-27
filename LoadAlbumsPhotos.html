@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data of Albums</title>
+    <link rel="stylesheet" href="bootstrap.css">
+</head>
+
+<body>
+
+    <!-- you will create  a table with -->
+    <h1 id="txtName"></h1>
+
+    <div class="row" id="dvPhotosList">
+
+    </div>
+    <!--<table class="table table-bordered" id="tblAlbumList">
+        <thead>
+            <tr>
+           
+                <th>title</th>
+               
+
+            </tr>
+        </thead>
+        <tbody id="tblData">
+
+        </tbody>
+    </table>-->
+
+
+
+
+    <script src="jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var userid = querystring('userId');
+            $.get("https://jsonplaceholder.typicode.com/users/" + userid + "", function (albumdata) {
+                console.log(albumdata.name);
+                $('#txtName').html(albumdata.name);
+
+            })
+
+            $.get("https://jsonplaceholder.typicode.com/albums?userId=" + userid + "", function (albumdata) {
+                $.each(albumdata, function (i, v) {
+                    var html = `<div class="card col-4">
+                        <h5 class="card-header">Title of Album:-</h5>
+                        <div class="card-body">
+                            <h5 class="card-title"></h5>
+                            <p class="card-text"><b>${v.title}<b></p>
+                            <a href="#" class="btn btn-primary btnViewPhotos" titleid="${v.id}">View Photos</a>
+                        </div>
+                    </div>`
+                    /*var html = `<tr>
+                 
+                    <td>${v.title}</td>
+                    <td><input type="button" value="View Photos" class="btn btn-primary btn-sm btnViewPhotos" titleid="${v.id}" ></td>
+                    </tr>`;*/
+                    $("#dvPhotosList").append(html);
+                })
+                $('.btnViewPhotos').click(function () {
+                    var titleid = $(this).attr("titleid");
+                    window.location.href = 'Photosdata.html?title=' + titleid;
+
+                })
+            })
+            function querystring(key) {
+                key = key.replace(/[*+?^$.\[\]{}()|\\\/]/g, "\\$&"); // escape RegEx meta chars
+                var match = location.search.match(new RegExp("[?&]" + key + "=([^&]+)(&|$)"));
+                return match && decodeURIComponent(match[1].replace(/\+/g, " "));
+            }
+        })
+
+
+    </script>
+</body>
+
+</html>

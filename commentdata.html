@@ -5,16 +5,20 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Table Data</title>
+    <title>Data of Comments</title>
     <link rel="stylesheet" href="bootstrap.css">
 </head>
 
 <body>
     <!-- you will create  a table with -->
-    <table class="table table-bordered" id="tblPostList">
+    <h1 id="titlePost"> Text will come here..</h1>
+    <div class="row" id="dvCommentsList">
+        
+    </div>
+    <!--<table class="table table-bordered" id="tblPostList">
         <thead>
             <tr>
-                <th>postId</th>
+                <!--<th>postId</th>
                 <th>id</th>
                 <th>name</th>
                 <th>email</th>
@@ -26,7 +30,7 @@
         <tbody id="tblData">
 
         </tbody>
-    </table>
+    </table>-->
 
 
 
@@ -34,29 +38,40 @@
     <script>
         $(document).ready(function () {
             var postid = querystring("postId");
-            
-            $.get("https://jsonplaceholder.typicode.com/comments?postId="+postid+"", function (listdata) {
+            $.get("https://jsonplaceholder.typicode.com/posts/" + postid + "", function (amit) {
+                console.log(amit.title);
+                $('#titlePost').html(amit.title);
+
+            })
+
+            $.get("https://jsonplaceholder.typicode.com/comments?postId=" + postid + "", function (listdata) {
                 $.each(listdata, function (i, v) {
-                    var html = `<tr>
-                    <td>${v.postId}</td>
-                    <td>${v.id}</td>
+                    var html = `<div class="card text-center col-5">
+                        <div class="card-body">
+                            <h5 class="card-title">${v.name}</h5>
+                            <p class="card-text">${v.body}</p>
+                            <p class="card-text"><small class="text-muted">${v.email}</small></p>
+                        </div>
+                    </div>`
+                    /*`<tr>
+                    
                     <td>${v.name}</td>
                     <td>${v.email}</td>
                     <td>${v.body}</td>
                     
-                    </tr>`;
-                    $("#tblPostList").find("tbody").append(html);
+                    </tr>`;*/
+                    $("#dvCommentsList").append(html);
                 })
 
             })
             function querystring(key) {
-            key = key.replace(/[*+?^$.\[\]{}()|\\\/]/g, "\\$&"); // escape RegEx meta chars
-            var match = location.search.match(new RegExp("[?&]" + key + "=([^&]+)(&|$)"));
-            return match && decodeURIComponent(match[1].replace(/\+/g, " "));
+                key = key.replace(/[*+?^$.\[\]{}()|\\\/]/g, "\\$&"); // escape RegEx meta chars
+                var match = location.search.match(new RegExp("[?&]" + key + "=([^&]+)(&|$)"));
+                return match && decodeURIComponent(match[1].replace(/\+/g, " "));
             }
-            
+
         })
-      
+
 
     </script>
 </body>

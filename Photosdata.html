@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data of Photos </title>
+    <link rel="stylesheet" href="bootstrap.css">
+</head>
+
+<body>
+    <!-- you will create  a table with -->
+    <h1 id="txtAlbumName"></h1>
+    <div class="row" id="dvPhotosList">
+        
+    </div>
+    
+    <!-- <table class="table table-bordered" id="tblPhotosList">
+        <thead>
+            <tr>
+                <th>albumId</th>
+                <th>id</th>
+                <th>title</th>
+                <th>url</th>
+                <th>thumbnailUrl</th>
+              
+
+            </tr>
+        </thead>
+        <tbody id="tblData">
+
+        </tbody>
+    </table> -->
+
+
+
+    <script src="jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () { 
+            var titleid = querystring('title');
+            $.get("https://jsonplaceholder.typicode.com/albums/"+titleid+"", function (albumdata) {
+                console.log(albumdata.title);
+               $('#txtAlbumName').html(albumdata.title);
+                
+            })
+            $.get("https://jsonplaceholder.typicode.com/photos?albumId="+titleid+"", function (photodata) {
+                $.each(photodata, function (i, v) {
+                    var html = `<div class="col-3"> <div class="card" style="width: 18rem;">
+                            <img class="card-img-top" src="${v.thumbnailUrl}" alt="Card image cap">
+                            <div class="card-body">
+                            <h5 class="card-title">${v.title}</h5>
+                            </div>
+                        </div></div>`;
+                    $("#dvPhotosList").append(html);
+                })
+                
+               
+            })
+            function querystring(key) {
+            key = key.replace(/[*+?^$.\[\]{}()|\\\/]/g, "\\$&"); // escape RegEx meta chars
+            var match = location.search.match(new RegExp("[?&]" + key + "=([^&]+)(&|$)"));
+            return match && decodeURIComponent(match[1].replace(/\+/g, " "));
+        }
+        })
+
+
+    </script>
+</body>
+
+</html>

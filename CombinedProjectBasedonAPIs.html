@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table Data</title>
+    <link rel="stylesheet" href="bootstrap.css">
+</head>
+
+<body>
+    <!-- you will create  a table with -->
+    <table class="table table-bordered" id="tblAlbumList">
+        <thead>
+            <tr>
+                
+                <th>name</th>
+                <th>username</th>
+                <th>email</th>
+                <th>address</th>
+                <th>phone</th>
+                <th>website</th>
+                <th>company</th>
+                <th>Press For Albums</th>
+                <th>Press For Posts</th>
+
+            </tr>
+        </thead>
+        <tbody id="tblData">
+
+        </tbody>
+    </table>
+
+
+
+    <script src="jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            
+
+            $.get("https://jsonplaceholder.typicode.com/users", function (listdata) {
+                $.each(listdata, function (i, v) {
+                    var html = `<tr>
+                    
+                    <td>${v.name}</td>
+                    <td>${v.username}</td>
+                    <td>${v.email}</td>
+                    <td>${[v.address.street] + " , " + [v.address.suite] + " , " + [v.address.city] + " , " + [v.address.zipcode] + " , " + [v.address.geo.lat] + " , " + [v.address.geo.lng]}</td>
+                    <td>${v.phone}</td>
+                    <td>${v.website}</td> 
+                    <td>${[v.company.name] + " , " + [v.company.catchPhrase] + " , " + [v.company.bs]}</td>
+                    <td><input type="button" value="View Albums" class="btn btn-primary btn-sm btnViewAlbums" buttontype="combined" userid="${v.id}"></td>
+                    <td><input type="button" value="View Posts" class="btn btn-primary btn-sm btnViewPosts" buttontype="combined" userid="${v.id}"></td>
+                    </tr>`;
+                    $("#tblAlbumList").find("tbody").append(html);
+                })
+                /*$('input[buttontype="combined"]').click(()=>{
+                    var type= $(this).attr('value');
+                    combination (type);
+                })
+                function combination(type){
+                    if (type == "View Albums") {
+                        window.location.href = 'LoadAlbumsPhotos.html?userId=' +userid;
+                    } else {
+                        window.location.href = 'postdata.html?userId=' +userid;
+                    }
+                }*/
+               $('.btnViewAlbums').click(function () {
+                    var userid = $(this).attr("userid");
+                    window.location.href = 'LoadAlbumsPhotos.html?userId=' +userid;
+                })
+                $('.btnViewPosts').click(function () {
+                    var userid = $(this).attr("userid");
+                    window.location.href = 'postdata.html?userId=' +userid;
+                })
+            })
+        })
+
+
+    </script>
+</body>
+
+</html>
