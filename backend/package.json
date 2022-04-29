@@ -1,6 +1,1 @@
-{
-"dependencies": {
-"express": "^4.18.0",
-"fs": "^0.0.1-security"
-}
-}
+{"dependencies":{"bluebird":"^3.7.2","dotenv":"^16.0.0","express":"^4.18.0","fs":"^0.0.1-security","https":"^1.0.0","mongodb":"^4.5.0","mongoose":"^6.3.1"}}
