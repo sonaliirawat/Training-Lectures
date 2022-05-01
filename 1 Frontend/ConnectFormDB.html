@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="bootstrap.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-6 mt-3">
+                <div class="form-group" id="frmSaveStudent">
+                    <label>Full Name</label>
+                    <input class="form-control" type="text" id="txtFullName" placeholder="Enter Student Name">
+                </div>
+            </div>
+            <div class="col-6 mt-3">
+                <div class="form-group">
+                    <label>Age</label>
+                    <input class="form-control" type="text" id="txtAge" placeholder="Enter Student Age">
+                </div>
+            </div>
+            <div class="text-center">
+                <button type="button" class="btn btn-warning btn-lg btn-block col-6 mt-4" id="btnSaveStudent">Save
+                    Student</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 mt-5">
+                <table class="table table-bordered" id="tblStudentList">
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Age</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <script src="jquery-3.6.0.min.js"></script>
+            <script>
+                $(document).ready(() => {
+
+                    $('#btnSaveStudent').click(function () {
+                        
+
+                        var Name = $("#txtFullName").val();
+                        var Age = $("#txtAge").val();
+                        var model = {
+                            name: Name,
+                            age: Age
+                        }
+                       
+                        
+                        $.post("http://localhost:4000/addStudent", model, function (result) {
+                            if (result == true) {
+                                alert("Record Saved Successfully.")
+                            }
+                            else { alert("Record Not Saved.") }
+                            $("#txtFullName").val('').focus();
+                            $("#txtAge").val('');
+
+
+                        })
+
+                    })
+                    $.get("http://localhost:4000/studentList", function (result) {
+                        $.each(result, function (i, v) {
+                            var html = `<tr>
+                                  <td>${v.name}</td>
+                                  <td>${v.age}</td>
+                        
+                                  </tr>`;
+                            $("#tblStudentList").find("tbody").append(html);
+                        })
+                        /*if (result == true) {
+                            alert("Record Saved Successfully.")
+                        }
+                        else { alert("Record Not Saved.") }*/
+
+
+                    })
+                })
+
+            </script>
+
+</body>
+
+</html>
