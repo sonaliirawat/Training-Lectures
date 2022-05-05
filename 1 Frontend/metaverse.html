@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metaverse</title>
+    <link rel="stylesheet" href="bootstrap.css">
+    <style>
+        .error {
+            border: solid red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container ">
+        <div class="row">
+            <h1>Create Account</h1>
+            <div class="col-7 mt-3">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input class="form-control intag" type="text" id="txtName" placeholder="Enter your Name">
+                </div>
+            </div>
+            <div class="col-7 mt-3">
+                <div class="form-group">
+                    <label>Gender</label>
+                    <select id="slGender" class="form-control">
+                        <option>Male</option>
+                        <option>Female</option>
+                        <option>Other</option>
+
+                    </select>
+                </div>
+            </div>
+            <div class="col-7 mt-3">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input class="form-control intag" type="text" id="txtUsername" placeholder="Enter your Username">
+                    <input type="button" value="Check Availability" id="btnCheckAvailability"
+                        class="btn btn-primary btn-sm col-3 mt-3">
+                </div>
+            </div>
+
+            <div class="col-7 mt-3">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input class="form-control intag" type="text" id="txtEmail" placeholder="Enter your Email">
+                </div>
+            </div>
+            <div class="col-7 mt-3">
+                <div class="form-group">
+                    <label>Password</label>
+                    <input class="form-control intag" type="password" id="txtPassword" placeholder="Enter your Password">
+                </div>
+            </div>
+            <div class="col-7 mt-3">
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <input class="form-control" type="password" id="txtConfirmPassword"
+                        placeholder="Enter your Password Again">
+                </div>
+            </div>
+            <div>
+                <button type="button" id="btnSave" class="btn btn-success btn-sm col-3 mt-4">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(() => {
+            $('#btnSave').click(function () {
+                $('#txtName').removeClass('error');
+                $('#txtUsername').removeClass('error');
+                $('#txtEmail').removeClass('error');
+                $('#txtPassword').removeClass('error'); 
+                $('#txtConfirmPassword').removeClass('error');
+                var Name = $("#txtName").val();
+                var Gender = $("#slGender option:selected").val();
+                var Username = $("#txtUsername").val();
+                var Email = $("#txtEmail").val();
+                var Password = $('#txtPassword').val();
+                var Confirmpassword = $('#txtConfirmPassword').val();
+
+              if (Name == "") {
+                  $('#txtName').addClass('error');
+                  return false;
+              }
+              if (Username == "") {
+                  $('#txtUsername').addClass('error');
+                  return false;
+              }
+              if (Email == "") {
+                  $('#txtEmail').addClass('error');
+                  return false;
+              }
+              if (Password == "") {
+                  $('#txtPassword').addClass('error');
+                  return false;
+              }
+              
+              if (Confirmpassword != Password) {
+                $('#txtConfirmPassword').addClass('error');
+                return false;
+              }
+                     
+                var model = {
+                    name: Name,
+                    username: Username,
+                    gender: Gender,
+                    email: Email,
+                    password: Password,
+                }
+
+                $.post("http://localhost:4000/addemployersdetaillist", model, function (result) {
+                    if (result == true) {
+                        alert("Record Saved Successfully.")
+                        }
+
+                    else { 
+                        alert("Record Not Saved.") 
+                    }
+                    
+                    $("#txtName").val("");
+                    $("#slGender").val("Male");
+                    $("#txtUsername").val("");
+                    $("#txtEmail").val("");
+                    $("#txtPassword").val("");
+                    $('#txtConfirmPassword').val("");
+
+
+                })
+                
+            })
+
+        })
+    </script>
+
+</body>
+
+</html>
