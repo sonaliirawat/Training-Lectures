@@ -6,4 +6,5 @@ const studentSchema = new Schema({
     age : { type : Number}
 
 })
+
 module.exports = mongoose.model('student', studentSchema);

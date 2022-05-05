@@ -36,7 +36,7 @@
                         <tr>
                             <th>Student Name</th>
                             <th>Age</th>
-                            <th></th>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -48,32 +48,9 @@
             <script src="jquery-3.6.0.min.js"></script>
             <script>
                 $(document).ready(() => {
-
-                    $('#btnSaveStudent').click(function () {
-                        
-
-                        var Name = $("#txtFullName").val();
-                        var Age = $("#txtAge").val();
-                        var model = {
-                            name: Name,
-                            age: Age
-                        }
-                       
-                        
-                        $.post("http://localhost:4000/addStudent", model, function (result) {
-                            if (result == true) {
-                                alert("Record Saved Successfully.")
-                            }
-                            else { alert("Record Not Saved.") }
-                            $("#txtFullName").val('').focus();
-                            $("#txtAge").val('');
-
-
-                        })
-
-                    })
                     $.get("http://localhost:4000/studentList", function (result) {
                         $.each(result, function (i, v) {
+
                             var html = `<tr>
                                   <td>${v.name}</td>
                                   <td>${v.age}</td>
@@ -81,13 +58,43 @@
                                   </tr>`;
                             $("#tblStudentList").find("tbody").append(html);
                         })
-                        /*if (result == true) {
-                            alert("Record Saved Successfully.")
+                    })
+
+                    $('#btnSaveStudent').click(function () {
+
+
+                        var Name = $("#txtFullName").val();
+                        var Age = $("#txtAge").val();
+
+
+
+
+                        var model = {
+                            name: Name,
+                            age: Age
                         }
-                        else { alert("Record Not Saved.") }*/
+
+                        $.post("http://localhost:4000/addStudent", model, function (result) {
+                            if (result == true) {
+                                alert("Record Saved Successfully.")
+                                var html = `<tr>
+                                        <td>${Name}</td> 
+                                        <td>${Age}</td>
+                                        </tr>`;
+                                $('#tblStudentList').find("tbody").append(html);
+                            }
+
+                            else { alert("Record Not Saved.") }
+
+                            $("#txtFullName").val('').focus();
+                            $("#txtAge").val('');
+
+
+                        })
 
 
                     })
+
                 })
 
             </script>

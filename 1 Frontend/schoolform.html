@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="bootstrap.css">
+    <script src="https://kit.fontawesome.com/0253679509.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="p-4 mt-3 bg-primary text-white">Summer School Application Form</div>
+                <div class="p-5 mt-4 bg-primary text-white">Student Information</div>
+
+            </div>
+            <div class="col-6 mt-3">
+                <div class="form-group">
+                    <input type="hidden" value="0" id="hdnStudentID">
+                    <label>Name</label>
+                    <input class="form-control col-6 mt-3" type="text" id="txtFirstName" placeholder="First Name">
+                    <input class="form-control col-6 mt-3" type="text" id="txtLastName" placeholder="Last Name">
+                </div>
+            </div>
+            <div class="col-10 mt-3">
+                <div class="form-group">
+                    <label>Grade</label>
+                    <input class="form-control col-6 mt-3" type="text" id="txtGrade">
+                </div>
+            </div>
+            <div class="col-10 mt-3">
+                <div class="form-group">
+                    <label>School Last Attended</label>
+                    <input class="form-control col-6 mt-3" type="text" id="txtSchoolLastAttended">
+                </div>
+            </div>
+            <div class="col-7 mt-3">
+                <div class="form-group">
+                    <label>Gender</label>
+                    <select id="slGender" class="form-control">
+                        <option>Male</option>
+                        <option>Female</option>
+                        <option>Other</option>
+
+                    </select>
+                </div>
+            </div>
+            <div class="col-6 mt-3">
+
+                <label>Date Of Birth</label>
+                <input placeholder="mm-dd-yyyy" type="text" id="txtDOB" class="form-control">
+
+
+            </div>
+            <div class="col-10 mt-3">
+                <div class="form-group">
+                    <label>Address</label>
+                    <input class="form-control col-6 mt-3" type="text" id="txtAddress">
+                </div>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-sm btn-primary col-3 mt-4" id="btnSubmit">Submit</button>
+            </div>
+            <div class="col-12 mt-5">
+                <table class="table table-bordered" id="tblStudentFormList">
+                    <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Grade</th>
+                            <th>School Last Attended</th>
+                            <th>Gender</th>
+                            <th>Date of Birth</th>
+                            <th>Address</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(() => {
+            loadStudents();
+            $('#hdnStudentID').val('0');
+
+            $('#btnSubmit').click(function () {
+                var FirstName = $("#txtFirstName").val();
+                var LastName = $("#txtLastName").val();
+                var Grade = $("#txtGrade").val();
+                var SchoolLastAttended = $("#txtSchoolLastAttended").val();
+                var Gender = $("#slGender option:selected").val();
+                var DateOfBirth = $('#txtDOB').val();
+                var Address = $("#txtAddress").val();
+
+                var model = {
+                    firstname: FirstName,
+                    lastname: LastName,
+                    grade: Grade,
+                    schoollastattended: SchoolLastAttended,
+                    gender: Gender,
+                    dateofbirth: DateOfBirth,
+                    address: Address
+                }
+                var apiURL = "http://localhost:4000/addschoolformlist";
+
+                var studentID = $('#hdnStudentID').val();
+
+                if (studentID != "0") {
+                    apiURL = "http://localhost:4000/updatestudent?id=" + studentID;
+                }
+
+                $.post(apiURL, model, function (result) {
+                    if (result == true) {
+                        alert("Record Saved Successfully.")
+                        loadStudents();
+                    }
+
+                    else { alert("Record Not Saved.") }
+                    $('#hdnStudentID').val("0");
+                    $("#txtFirstName").val('').focus();
+                    $("#txtLastName").val('');
+                    $("#txtGrade").val('');
+                    $("#txtSchoolLastAttended").val('');
+                    $("#slGender").val('Male');
+                    $('#txtDOB').val('');
+                    $("#txtAddress").val('');
+
+                })
+
+            })
+            //click event
+            //api// result-  - object   $("#txtAddress").val(result.address);
+            $('#tblStudentFormList').on("click", ".btnEdit", function () {
+                $('#hdnStudentID').val($(this).attr('studentid'));
+                $.get("http://localhost:4000/sudentdetail?id=" + $(this).attr('studentid'), function (result) {
+
+                    $("#txtFirstName").val(result.firstname);
+                    $("#txtLastName").val(result.lastname);
+                    $("#txtGrade").val(result.grade);
+                    $("#txtSchoolLastAttended").val(result.schoollastattended);
+                    $("#slGender").val(result.gender);
+                    $('#txtDOB').val(result.dateofbirth);
+                    $("#txtAddress").val(result.address);
+                    console.log(true);
+                })
+
+            })
+            $('#tblStudentFormList').on("click", ".btnDelete", function  () {
+                
+                $('#hdnStudentID').val($(this).attr('delstudentid'));
+                
+                $.post("http://localhost:4000/deletestudent?id=" + $(this).attr('delstudentid'), function (result) {
+                    
+                    $(this).parent().closest('tr').remove();
+                    loadStudents();
+                })
+
+            })
+        })
+        function loadStudents() {
+            $.get("http://localhost:4000/schoolformlist", function (result) {
+                $("#tblStudentFormList").find("tbody").html('');
+                $.each(result, function (i, v) {
+
+                    var html = `<tr>
+                                  <td>${v.firstname}</td>
+                                  <td>${v.lastname}</td>
+                                  <td>${v.grade}</td>
+                                  <td>${v.schoollastattended}</td>
+                                  <td>${v.gender}</td>
+                                  <td>${v.dateofbirth}</td>
+                                  <td>${v.address}</td>
+                                  <td><input type="button" value="Edit" studentid="${v._id}" btntype="editStudent" class="btn btn-success btn-sm btnEdit"></td>
+                                  <td><input type="button" value="Delete" delstudentid="${v._id}" btntype="editStudent" class="btn btn-success btn-sm btnDelete"></td>
+                                  </tr>`;
+                    $("#tblStudentFormList").find("tbody").append(html);
+                })
+            })
+        }
+
+
+    </script>
+
+</body>
+
+</html>
